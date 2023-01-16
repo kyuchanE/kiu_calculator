@@ -9,23 +9,28 @@ import androidx.databinding.DataBindingUtil
 import kiu.dev.my_calculator.data.AppVersion
 import kiu.dev.my_calculator.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : BaseActivity<ActivityMainBinding>() {
+
+    override val layoutId: Int = R.layout.activity_main
+
     private val versionData by lazy {
         AppVersion("1.0.0")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Splash init
         installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.activity = this
         binding.version = versionData.copy()
 
         binding.btnClick.setOnClickListener {
             Log.d("TestLog", "MainActivity btnClick setOnClickListener")
         }
+
+        setStatusBarTransparent()
+        defaultPadding(binding.clContainer)
 
     }
 
@@ -36,4 +41,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+
 }
